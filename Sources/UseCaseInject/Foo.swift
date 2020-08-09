@@ -11,16 +11,8 @@ public class Foo: Codable {
 
 public class Bar {
     @Injected public var foo: Foo
-    @Injected(data: "{\"info\":\"some data injected\"}".data(using: .utf8)!) public var fooData: Foo
     @LazyInjected public var fooLazy: Foo
     @OptionalInjected public var fooOptional: Foo?
-    @Injected(foo: .init(info: "custom init via extension")) public var fooCustomInit: Foo
     
     public init() {}
-}
-
-extension Injected {
-    init(foo: Foo) {
-        self.init(name: <#T##String?#>, container: <#T##Resolver?#>)
-    }
 }

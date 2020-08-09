@@ -5,32 +5,27 @@ import PackageDescription
 
 let package = Package(
     name: "Inject",
+    // The platforms are needed for mockingbird, Resolver can work on any platform potentially.
     platforms: [
         .macOS(.v10_14),
         .iOS(.v8),
         .tvOS(.v9),
     ],
-    products: [
-        // Products define the executables and libraries produced by a package, and make them visible to other packages.
-        .library(
-            name: "Inject",
-            targets: ["Inject"]),
-    ],
+    products: [],
     dependencies: [
-        .package(url: "git@github.com:dooZdev/Resolver.git", .branch("develop"))
+        .package(url: "git@github.com:dooZdev/Resolver.git", .branch("develop")),
+        .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMajor(from: "0.14.0"))
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages which this package depends on.
-        .target(
-            name: "Inject",
-            dependencies: []),
         .target(
             name: "UseCaseInject",
             dependencies: ["Resolver"]),
-        .testTarget(
-            name: "UseCaseInjectTests",
-            dependencies: ["UseCaseInject"]
-        ),
+        
+        // This should include mockingbird but there is a problem https://github.com/birdrides/mockingbird/issues/164
+        // uncomment when generating tests
+//        .testTarget(
+//            name: "UseCaseInjectTests",
+//            dependencies: ["UseCaseInject"]
+//        ),
     ]
 )
