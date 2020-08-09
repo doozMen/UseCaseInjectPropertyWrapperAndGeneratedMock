@@ -169,72 +169,6 @@ public func mock(_ type: UseCaseInject.Bar.Type, file: StaticString = #file, lin
   return BarMock.InitializerProxy.self
 }
 
-// MARK: - Mocked Controller
-
-public final class ControllerMock: UseCaseInject.Controller, Mockingbird.Mock {
-  static let staticMock = Mockingbird.StaticMock()
-  public let mockingContext = Mockingbird.MockingContext()
-  public let stubbingContext = Mockingbird.StubbingContext()
-  public let mockMetadata = Mockingbird.MockMetadata(["generator_version": "0.14.1", "module_name": "UseCaseInject"])
-  public var sourceLocation: Mockingbird.SourceLocation? {
-    get { return self.stubbingContext.sourceLocation }
-    set {
-      self.stubbingContext.sourceLocation = newValue
-      ControllerMock.staticMock.stubbingContext.sourceLocation = newValue
-    }
-  }
-
-  // MARK: Mocked service
-
-  override public var `service`: UseCaseInject.ServiceProtocol {
-    get {
-      let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "service.get", arguments: [], returnType: Swift.ObjectIdentifier((UseCaseInject.ServiceProtocol).self))
-      return self.mockingContext.didInvoke(invocation) { () -> UseCaseInject.ServiceProtocol in
-        let implementation = self.stubbingContext.implementation(for: invocation)
-        if let concreteImplementation = implementation as? () -> UseCaseInject.ServiceProtocol {
-          return concreteImplementation()
-        } else if let defaultValue = self.stubbingContext.defaultValueProvider.provideValue(for: (UseCaseInject.ServiceProtocol).self) {
-          return defaultValue
-        } else {
-          fatalError(self.stubbingContext.failTest(for: invocation))
-        }
-      }
-    }
-    set {
-      let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "service.set", arguments: [ArgumentMatcher(newValue)], returnType: Swift.ObjectIdentifier(Void.self))
-      self.mockingContext.didInvoke(invocation)
-      let implementation = self.stubbingContext.implementation(for: invocation)
-      if let concreteImplementation = implementation as? (UseCaseInject.ServiceProtocol) -> Void {
-        concreteImplementation(newValue)
-      } else {
-        (implementation as? () -> Void)?()
-      }
-    }
-  }
-
-  public func getService() -> Mockingbird.Mockable<Mockingbird.PropertyGetterDeclaration, () -> UseCaseInject.ServiceProtocol, UseCaseInject.ServiceProtocol> {
-    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "service.get", arguments: [], returnType: Swift.ObjectIdentifier((UseCaseInject.ServiceProtocol).self))
-    return Mockingbird.Mockable<Mockingbird.PropertyGetterDeclaration, () -> UseCaseInject.ServiceProtocol, UseCaseInject.ServiceProtocol>(mock: self, invocation: invocation)
-  }
-
-  public func setService(_ newValue: @escaping @autoclosure () -> UseCaseInject.ServiceProtocol) -> Mockingbird.Mockable<Mockingbird.PropertySetterDeclaration, (UseCaseInject.ServiceProtocol) -> Void, Void> {
-    let arguments: [Mockingbird.ArgumentMatcher] = [Mockingbird.resolve(newValue)]
-    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "service.set", arguments: arguments, returnType: Swift.ObjectIdentifier(Void.self))
-    return Mockingbird.Mockable<Mockingbird.PropertySetterDeclaration, (UseCaseInject.ServiceProtocol) -> Void, Void>(mock: self, invocation: invocation)
-  }
-
-  fileprivate init(sourceLocation: Mockingbird.SourceLocation) {
-    super.init()
-    Mockingbird.checkVersion(for: self)
-    self.sourceLocation = sourceLocation
-  }
-}
-
-/// Returns a concrete mock of `Controller`.
-public func mock(_ type: UseCaseInject.Controller.Type, file: StaticString = #file, line: UInt = #line) -> ControllerMock {
-  return ControllerMock(sourceLocation: Mockingbird.SourceLocation(file, line))
-}
-
 // MARK: - Mocked Foo
 
 public final class FooMock: UseCaseInject.Foo, Mockingbird.Mock {
@@ -288,9 +222,9 @@ public func mock(_ type: UseCaseInject.Foo.Type, file: StaticString = #file, lin
   return FooMock.InitializerProxy.self
 }
 
-// MARK: - Mocked ServiceProtocol
+// MARK: - Mocked Servicable
 
-public final class ServiceProtocolMock: UseCaseInject.ServiceProtocol, Mockingbird.Mock {
+public final class ServicableMock: UseCaseInject.NetworkServicable, Mockingbird.Mock {
   static let staticMock = Mockingbird.StaticMock()
   public let mockingContext = Mockingbird.MockingContext()
   public let stubbingContext = Mockingbird.StubbingContext()
@@ -299,7 +233,7 @@ public final class ServiceProtocolMock: UseCaseInject.ServiceProtocol, Mockingbi
     get { return self.stubbingContext.sourceLocation }
     set {
       self.stubbingContext.sourceLocation = newValue
-      ServiceProtocolMock.staticMock.stubbingContext.sourceLocation = newValue
+      ServicableMock.staticMock.stubbingContext.sourceLocation = newValue
     }
   }
 
@@ -307,11 +241,28 @@ public final class ServiceProtocolMock: UseCaseInject.ServiceProtocol, Mockingbi
     Mockingbird.checkVersion(for: self)
     self.sourceLocation = sourceLocation
   }
+
+  // MARK: Mocked `fetch`()
+
+  public func `fetch`() -> Void {
+    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "`fetch`() -> Void", arguments: [], returnType: Swift.ObjectIdentifier((Void).self))
+    self.mockingContext.didInvoke(invocation) { () -> Void in
+      let implementation = self.stubbingContext.implementation(for: invocation)
+      if let concreteImplementation = implementation as? () -> Void {
+        concreteImplementation()
+      }
+    }
+  }
+
+  public func `fetch`() -> Mockingbird.Mockable<Mockingbird.FunctionDeclaration, () -> Void, Void> {
+    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "`fetch`() -> Void", arguments: [], returnType: Swift.ObjectIdentifier((Void).self))
+    return Mockingbird.Mockable<Mockingbird.FunctionDeclaration, () -> Void, Void>(mock: self, invocation: invocation)
+  }
 }
 
-/// Returns a concrete mock of `ServiceProtocol`.
-public func mock(_ type: UseCaseInject.ServiceProtocol.Protocol, file: StaticString = #file, line: UInt = #line) -> ServiceProtocolMock {
-  return ServiceProtocolMock(sourceLocation: Mockingbird.SourceLocation(file, line))
+/// Returns a concrete mock of `Servicable`.
+public func mock(_ type: UseCaseInject.NetworkServicable.Protocol, file: StaticString = #file, line: UInt = #line) -> ServicableMock {
+  return ServicableMock(sourceLocation: Mockingbird.SourceLocation(file, line))
 }
 
 // MARK: - Mocked Service
@@ -329,14 +280,42 @@ public final class ServiceMock: UseCaseInject.Service, Mockingbird.Mock {
     }
   }
 
-  fileprivate init(sourceLocation: Mockingbird.SourceLocation) {
+  public enum InitializerProxy {
+    public static func initialize(__file: StaticString = #file, __line: UInt = #line) -> ServiceMock {
+      let mock: ServiceMock = ServiceMock()
+      mock.sourceLocation = SourceLocation(__file, __line)
+      return mock
+    }
+  }
+
+  // MARK: Mocked `fetch`()
+
+  public override func `fetch`() -> Void {
+    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "`fetch`() -> Void", arguments: [], returnType: Swift.ObjectIdentifier((Void).self))
+    self.mockingContext.didInvoke(invocation) { () -> Void in
+      let implementation = self.stubbingContext.implementation(for: invocation)
+      if let concreteImplementation = implementation as? () -> Void {
+        concreteImplementation()
+      }
+    }
+  }
+
+  public func `fetch`() -> Mockingbird.Mockable<Mockingbird.FunctionDeclaration, () -> Void, Void> {
+    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "`fetch`() -> Void", arguments: [], returnType: Swift.ObjectIdentifier((Void).self))
+    return Mockingbird.Mockable<Mockingbird.FunctionDeclaration, () -> Void, Void>(mock: self, invocation: invocation)
+  }
+
+  // MARK: Mocked init()
+
+  public required override init() {
     super.init()
     Mockingbird.checkVersion(for: self)
-    self.sourceLocation = sourceLocation
+    let invocation: Mockingbird.Invocation = Mockingbird.Invocation(selectorName: "init() ", arguments: [], returnType: Swift.ObjectIdentifier((Void).self))
+    self.mockingContext.didInvoke(invocation)
   }
 }
 
-/// Returns a concrete mock of `Service`.
-public func mock(_ type: UseCaseInject.Service.Type, file: StaticString = #file, line: UInt = #line) -> ServiceMock {
-  return ServiceMock(sourceLocation: Mockingbird.SourceLocation(file, line))
+/// Returns an abstract mock which should be initialized using `mock(Service.self).initialize(…)`.
+public func mock(_ type: UseCaseInject.Service.Type, file: StaticString = #file, line: UInt = #line) -> ServiceMock.InitializerProxy.Type {
+  return ServiceMock.InitializerProxy.self
 }

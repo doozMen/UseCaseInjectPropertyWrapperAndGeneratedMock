@@ -8,7 +8,25 @@ final class InjectTests: XCTestCase {
     let testInfo = "some test info"
     
     override func setUp() {
-        
+        super.setUp()
+        // Have to use the resolver that is cached so we can reset it in every test
+        Resolver.defaultScope = Resolver.cached
+        // Set the static main resolver again. That is the resolver that will be used on injection
+        Resolver.main = Resolver()
+    }
+    
+    override func tearDown() {
+        // reset is needed otherwise lingering registers might make tests depended
+        // For example
+        // 1. comment out reset line
+        // 2. run only test testInjectedProtocol_mocked => it should succeed
+        // 2.1 run all tests => testInjectedProtocol_mocked failes
+        // 3. add this line again and all will work
+        Resolver.cached.reset()
+        super.tearDown()
+    }
+    
+    func testResolvedViaInjectedPropertyWrapper() {
         Resolver.registerServices = {
             Resolver.register(Foo.self) { [weak self] in
                 do {
@@ -17,26 +35,7 @@ final class InjectTests: XCTestCase {
                     fatalError("\(error)")
                 }
             }
-            
-            Resolver.register(Foo.self, name: "\(Foo.self)DataArgument") { (resolver, arguments) in
-                
-                do {
-                    return try JSONDecoder().decode(Foo.self, from: arguments())
-                } catch {
-                    fatalError("\(error)")
-                }
-            }
-            
-            Resolver.register(Foo.self, name: "\(Foo.self)Arguments") { (resolver, arguments) in
-                arguments()
-            }
         }
-        
-        super.setUp()
-    }
-    
-    
-    func testResolvedViaInjectedPropertyWrapper() {
         let bar = Bar()
         
         XCTAssertEqual(bar.foo.info, testInfo)
@@ -44,13 +43,9 @@ final class InjectTests: XCTestCase {
         XCTAssertEqual(bar.fooOptional?.info, testInfo)
     }
     
-    func testUniqueInjectedProtocol() {
-        
-        Resolver.defaultScope = Resolver.application
-        Resolver.main = Resolver()
-        
+    func testInjectedProtocol() {
         Resolver.registerServices = {
-            Resolver.register { Service() }.implements(ServiceProtocol.self)
+            Resolver.register { NetworkService() }.implements(NetworkServicable.self)
         }
         
         let c1 = Controller()
@@ -59,25 +54,26 @@ final class InjectTests: XCTestCase {
         XCTAssertTrue(c1.service === c2.service)
     }
     
-    func testUniqueInjectedProtocol_mocked() {
-        
-        Resolver.defaultScope = Resolver.application
-        Resolver.main = Resolver()
-        
-        let mockService: ServiceProtocolMock = mock(ServiceProtocol.self)
+    func testInjectedProtocol_mocked() {
+        let mockService: ServicableMock = mock(NetworkServicable.self)
         
         Resolver.registerServices = {
-            Resolver.register { mockService }.implements(ServiceProtocol.self)
+            Resolver.register { mockService }.implements(NetworkServicable.self)
         }
         
         let c1 = Controller()
-        let c2 = Controller()
         
-        XCTAssertTrue(c1.service === c2.service)
+        XCTAssertTrue(c1.service === mockService)
+        given(mockService.fetch()).willReturn()
+        
+        c1.loadData()
+        
+        verify(mockService.fetch()).wasCalled()
     }
 
     static var allTests = [
-        ("testResolvedViaInjectedPropertyWrapper", testResolvedViaInjectedPropertyWrapper),
+        ("testResolvedViaInjectedPropertyWrapper", testResolvedViaInjectedPropertyWrapper,
+         "testInjectedProtocol_mocked", testInjectedProtocol_mocked),
     ]
 }
 

@@ -13,7 +13,7 @@ let package = Package(
     ],
     products: [],
     dependencies: [
-        .package(url: "git@github.com:dooZdev/Resolver.git", .branch("develop")),
+        .package(url: "git@github.com:dooZdev/Resolver.git", .branch("experiment/propertyWrappersWithArguments")),
         .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMajor(from: "0.14.0"))
     ],
     targets: [
