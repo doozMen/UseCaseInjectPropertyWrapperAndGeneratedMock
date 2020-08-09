@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Resolver",
+        "repositoryURL": "git@github.com:dooZdev/Resolver.git",
+        "state": {
+          "branch": "develop",
+          "revision": "6842435b69f2e5d9d6d417a2d0753033815f2d93",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

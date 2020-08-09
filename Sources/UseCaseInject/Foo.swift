@@ -1,15 +1,26 @@
-//
-//  File.swift
-//  
-//
-//  Created by Stijn Willems on 07/08/2020.
-//
-
 import Foundation
-import Inject
+import Resolver
 
-public final class Foo: Injectable {
-    public static var shared = Foo()
+public class Foo: Codable {    
+    public let info: String
     
-    public let info = "this is the RELEASE version, should not be used"
+    init(info: String) {
+        self.info = info
+    }
+}
+
+public class Bar {
+    @Injected public var foo: Foo
+    @Injected(data: "{\"info\":\"some data injected\"}".data(using: .utf8)!) public var fooData: Foo
+    @LazyInjected public var fooLazy: Foo
+    @OptionalInjected public var fooOptional: Foo?
+    @Injected(foo: .init(info: "custom init via extension")) public var fooCustomInit: Foo
+    
+    public init() {}
+}
+
+extension Injected {
+    init(foo: Foo) {
+        self.init(name: <#T##String?#>, container: <#T##Resolver?#>)
+    }
 }

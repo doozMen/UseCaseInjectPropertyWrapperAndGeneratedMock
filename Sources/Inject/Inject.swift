@@ -15,3 +15,6 @@ public class Inject<T> where T: Injectable {
     }
 }
 
+public protocol SingletonInject {}
+
+
