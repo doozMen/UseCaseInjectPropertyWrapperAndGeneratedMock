@@ -2,7 +2,6 @@ import XCTest
 import UseCaseInject
 import Resolver
 import Mockingbird
-@testable import MockingbirdMocks
 
 final class InjectTests: XCTestCase {
     

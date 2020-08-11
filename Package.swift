@@ -20,10 +20,9 @@ let package = Package(
         .target(
             name: "UseCaseInject",
             dependencies: ["Resolver"]),
-        .target(name: "MockingbirdMocks", dependencies: ["Mockingbird", "UseCaseInject", "Resolver"]),
         .testTarget(
             name: "UseCaseInjectTests",
-            dependencies: ["UseCaseInject", "Mockingbird", "MockingbirdMocks"]
+            dependencies: ["UseCaseInject", "Mockingbird"]
         ),
     ]
 )
