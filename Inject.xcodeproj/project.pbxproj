@@ -22,6 +22,7 @@
 
 /* Begin PBXBuildFile section */
 		86DAC97024E27446006A31DD /* Mockingbird in Frameworks */ = {isa = PBXBuildFile; productRef = 86DAC96F24E27446006A31DD /* Mockingbird */; };
+		86DAC97624E27706006A31DD /* UseCaseInjectMocks.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DAC97524E27706006A31DD /* UseCaseInjectMocks.generated.swift */; };
 		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_44 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* Resolver.swift */; };
 		OBJ_51 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* Package.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		86DAC97524E27706006A31DD /* UseCaseInjectMocks.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UseCaseInjectMocks.generated.swift; sourceTree = "<group>"; };
 		"Inject::UseCaseInject::Product" /* UseCaseInject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UseCaseInject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"Inject::UseCaseInjectTests::Product" /* UseCaseInjectTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = file; path = UseCaseInjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		86DAC97424E27706006A31DD /* MockingbirdMocks */ = {
+			isa = PBXGroup;
+			children = (
+				86DAC97524E27706006A31DD /* UseCaseInjectMocks.generated.swift */,
+			);
+			path = MockingbirdMocks;
+			sourceTree = "<group>";
+		};
 		OBJ_11 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +177,7 @@
 		OBJ_5 /*  */ = {
 			isa = PBXGroup;
 			children = (
+				86DAC97424E27706006A31DD /* MockingbirdMocks */,
 				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
 				OBJ_11 /* Tests */,
@@ -356,6 +367,7 @@
 			files = (
 				OBJ_66 /* InjectTests.swift in Sources */,
 				OBJ_67 /* XCTestManifests.swift in Sources */,
+				86DAC97624E27706006A31DD /* UseCaseInjectMocks.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

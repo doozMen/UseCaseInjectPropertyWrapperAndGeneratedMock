@@ -42,16 +42,28 @@ I filed this issue https://github.com/birdrides/mockingbird/issues/164 so it cou
 
 How to build the project and generate the mocks again.
 
-1. Follow the swift package manager installation instructions from [Mockingbird](https://github.com/birdrides/mockingbird)
-2. `swift package generate-xcodeproj`
-3. `open Inject.xcproj`
-4. [manual instructions from mockingbird](https://github.com/birdrides/mockingbird/wiki/Manual-Setup) `mockingbird generate --targets UseCaseInject`
-5. `open Inject.xcproj` again
-    * Add  `/MockingbirdMocks/UseCaseInjectMocks.generated.swift` to `Tests/UseCaseInjectTests`
-    * Add it to the test target as a compile source
-6. run the tests
+To generate Xcode project
 
-When you change the code in UseCaseInject target you should do step 4 again.
+1. Uncomment test target in Package.swift. `swift package generate-xcodeproj`
+2. `open Inject.xcproj`
+3. Follow the swift package manager installation instructions from [Mockingbird](https://github.com/birdrides/mockingbird)a
+
+Install mockingbird cli tool
+```bash
+$ xcodebuild -resolvePackageDependencies
+$ DERIVED_DATA=$(xcodebuild -showBuildSettings | pcregrep -o1 'OBJROOT = (/.*)/Build')
+$ (cd "${DERIVED_DATA}/SourcePackages/checkouts/mockingbird" && make install-prebuilt)
+```
+
+more info [manual instructions from mockingbird](https://github.com/birdrides/mockingbird/wiki/Manual-Setup) 
+
+Generate mock code again, not needed to run tests as it is already generated
+
+`mockingbird generate --targets UseCaseInject`
+
+This generates mocks in folder `MockingbirdMocks`, the generated file in the folder needs to be compiled along the test target. As we do a manual setup of mockingbird you need to add this to the test target, already done for this repo in by adding folder `MockingbirdMocks` to project and assigning file `MockingbirdMocks/UseCaseInjectMocks.generated.swift` to the compile sources of the test target.
+
+![](Resources/AssignToTestTarget.png)
 
 ## Discussion
 
