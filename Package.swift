@@ -23,9 +23,9 @@ let package = Package(
         
         // This should include mockingbird but there is a problem https://github.com/birdrides/mockingbird/issues/164
         // uncomment when generating tests
-//        .testTarget(
-//            name: "UseCaseInjectTests",
-//            dependencies: ["UseCaseInject"]
-//        ),
+        .testTarget(
+            name: "UseCaseInjectTests",
+            dependencies: ["UseCaseInject"]
+        ),
     ]
 )
