@@ -28,19 +28,29 @@ final class InjectTests: XCTestCase {
     
     func testResolvedViaInjectedPropertyWrapper() {
         Resolver.registerServices = {
-            Resolver.register(Foo.self) { [weak self] in
+            Resolver.register(Foo.self, name: "FooDataArgument") {
                 do {
-                    return try JSONDecoder().decode(Foo.self, from: "{\"info\":\"\(self!.testInfo)\"}".data(using: .utf8)!)
+                    return try JSONDecoder().decode(Foo.self, from: "{\"info\":\"\(self.testInfo)\"}".data(using: .utf8)!)
                 } catch {
                     fatalError("\(error)")
                 }
             }
+            
+            Resolver.register(Foo.self, name: "FooArguments") { _, foo in
+                return foo()
+            }
+            
+            Resolver.register(Foo.self) {
+                return Foo(info: "Foo from a type, without arguments")
+            }
         }
         let bar = Bar()
         
-        XCTAssertEqual(bar.foo.info, testInfo)
-        XCTAssertEqual(bar.fooLazy.info, testInfo)
-        XCTAssertEqual(bar.fooOptional?.info, testInfo)
+        XCTAssertEqual(bar.foo.info, "Foo from a type, without arguments")
+        XCTAssertEqual(bar.fooLazy.info, "Foo from a type, without arguments")
+        XCTAssertEqual(bar.fooOptional?.info, "Foo from a type, without arguments")
+        XCTAssertEqual(bar.fooData.info, testInfo)
+        XCTAssertEqual(bar.fooCustomInit.info, "custom init via extension")
     }
     
     func testInjectedProtocol() {
@@ -55,7 +65,7 @@ final class InjectTests: XCTestCase {
     }
     
     func testInjectedProtocol_mocked() {
-        let mockService: ServicableMock = mock(NetworkServicable.self)
+        let mockService: NetworkServicableMock = mock(NetworkServicable.self)
         
         Resolver.registerServices = {
             Resolver.register { mockService }.implements(NetworkServicable.self)

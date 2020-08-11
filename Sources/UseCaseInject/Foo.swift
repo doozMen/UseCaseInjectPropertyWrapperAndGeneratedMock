@@ -4,7 +4,7 @@ import Resolver
 public class Foo: Codable {    
     public let info: String
     
-    init(info: String) {
+    public init(info: String) {
         self.info = info
     }
 }
@@ -21,6 +21,6 @@ public class Bar {
 
 extension Injected {
     init(foo: Foo) {
-        self.init(name: <#T##String?#>, container: <#T##Resolver?#>)
+        self.init(arguments: foo)
     }
 }
