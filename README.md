@@ -1,5 +1,7 @@
 # @Injected and testing example 
 
+![](https://github.com/doozMen/UseCaseInjectPropertyWrapperAndGeneratedMock/workflows/Swift/badge.svg)
+
 This is an example project setup managing dependencies with property wrappers code while allowing fast writing of unit tests.
 
 1. uses @Injected from [Resolver](https://github.com/hmlongco/Resolver) by @hmlongco

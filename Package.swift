@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [],
     dependencies: [
-        .package(url: "git@github.com:dooZdev/Resolver.git", .branch("experiment/propertyWrappersWithArguments")),
-        .package(url: "git@github.com:birdrides/mockingbird.git", .upToNextMajor(from: "0.14.1"))
+        .package(url: "https://github.com/dooZdev/Resolver.git", .branch("experiment/propertyWrappersWithArguments")),
+        .package(url: "https://github.com/birdrides/mockingbird.git", .upToNextMajor(from: "0.14.1"))
     ],
     targets: [
         .target(

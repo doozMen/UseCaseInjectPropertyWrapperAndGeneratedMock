@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "Mockingbird",
-        "repositoryURL": "git@github.com:birdrides/mockingbird.git",
+        "repositoryURL": "https://github.com/birdrides/mockingbird.git",
         "state": {
           "branch": null,
           "revision": "d76d5e927cceaa3ccd51d3395196ae62bd5a5adc",
@@ -12,7 +12,7 @@
       },
       {
         "package": "Resolver",
-        "repositoryURL": "git@github.com:dooZdev/Resolver.git",
+        "repositoryURL": "https://github.com/dooZdev/Resolver.git",
         "state": {
           "branch": "experiment/propertyWrappersWithArguments",
           "revision": "a51d294247f406f2f22b8f31fa824448c19be484",
