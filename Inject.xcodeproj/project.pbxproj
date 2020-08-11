@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		867EB12224E2BD42008C9A91 /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 867EB12124E2BD42008C9A91 /* Resolver */; };
 		86DAC97024E27446006A31DD /* Mockingbird in Frameworks */ = {isa = PBXBuildFile; productRef = 86DAC96F24E27446006A31DD /* Mockingbird */; };
 		86DAC97624E27706006A31DD /* UseCaseInjectMocks.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DAC97524E27706006A31DD /* UseCaseInjectMocks.generated.swift */; };
 		OBJ_32 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
@@ -95,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				867EB12224E2BD42008C9A91 /* Resolver in Frameworks */,
 				OBJ_60 /* Resolver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,7 +176,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				86DAC97424E27706006A31DD /* MockingbirdMocks */,
@@ -187,7 +189,6 @@
 				OBJ_25 /* MockingbirdMocks */,
 				OBJ_26 /* README.md */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -238,6 +239,9 @@
 				OBJ_61 /* PBXTargetDependency */,
 			);
 			name = UseCaseInject;
+			packageProductDependencies = (
+				867EB12124E2BD42008C9A91 /* Resolver */,
+			);
 			productName = UseCaseInject;
 			productReference = "Inject::UseCaseInject::Product" /* UseCaseInject.framework */;
 			productType = "com.apple.product-type.framework";
@@ -309,9 +313,10 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			packageReferences = (
 				86DAC96E24E27445006A31DD /* XCRemoteSwiftPackageReference "mockingbird" */,
+				867EB12024E2BD42008C9A91 /* XCRemoteSwiftPackageReference "Resolver" */,
 			);
 			productRefGroup = OBJ_20 /* Products */;
 			projectDirPath = "";
@@ -748,6 +753,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		867EB12024E2BD42008C9A91 /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:dooZdev/Resolver.git";
+			requirement = {
+				branch = experiment/propertyWrappersWithArguments;
+				kind = branch;
+			};
+		};
 		86DAC96E24E27445006A31DD /* XCRemoteSwiftPackageReference "mockingbird" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/birdrides/mockingbird";
@@ -759,6 +772,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		867EB12124E2BD42008C9A91 /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 867EB12024E2BD42008C9A91 /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
 		86DAC96F24E27446006A31DD /* Mockingbird */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 86DAC96E24E27445006A31DD /* XCRemoteSwiftPackageReference "mockingbird" */;
